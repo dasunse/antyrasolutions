@@ -1,0 +1,212 @@
+<?php
+$visualizer_enable = null;
+$type = null;
+$wallpapers = [];
+$backgrounds = [];
+$wallpapers_html ='';
+
+if (Mage::getSingleton('cms/page')->getIdentifier()) {
+    $visualizer_enable = true;
+    $type = 'cms';
+} else {
+
+    $product_current = Mage::registry('current_product');
+
+    if ($product_current) {
+
+        $product_id = $product_current->getId();
+        $product = Mage::getModel('catalog/product');
+
+        if ($product_id) {
+            $product->load($product_id);
+
+
+            if ($product->getData('visualizer_img_enable')) {
+
+                $wallpapers_html ='';
+                if ('no_selection' != $product->getData('visualizer_img')) {
+                    $visualizer_enable = true;
+
+                    $wallpapers_html .= '<img id="wallpaper_0" ';
+                    $wallpapers_html .= ' onclick="change_wallpaper_image(0);" ';
+                    $wallpapers_html .= ' src="'.$this->helper('catalog/image')->init($product, 'visualizer_img')->keepFrame(false)->resize(100, 250).'" ';
+                    $wallpapers_html .= ' width="100" ';
+                    $wallpapers_html .= ' class="grid-image img-responsive"/>';
+
+                }
+            }
+            $type = 'product';
+        }
+    } else {
+
+        $get_current_category_id = Mage::registry('current_category')->getId();
+        $visualizer_enable = Mage::getSingleton('catalog/category')
+            ->load($get_current_category_id)
+            ->getData('visualizer_enable');
+
+        if ($visualizer_enable) {
+
+            $category = new Mage_Catalog_Model_Category();
+            $category->load($get_current_category_id);
+            $collection = $category->getProductCollection();
+            $collection->addAttributeToSelect('*');
+
+            $val = 0;
+            $wallpapers_html ='';
+            foreach ($collection as $_product) {
+
+                if ($_product->getData('visualizer_img')) {
+
+                    $wallpapers_html .= '<img id="wallpaper_'.$val.'" ';
+                    $wallpapers_html .= ' onclick="change_wallpaper_image('.$val.');" ';
+                    $wallpapers_html .= ' src="'.$this->helper('catalog/image')->init($_product, 'visualizer_img')->keepFrame(false)->resize(100, 250).'" ';
+                    $wallpapers_html .= ' width="100" ';
+                    $wallpapers_html .= ' class="grid-image img-responsive"/>';
+
+                    $val++;
+                }
+
+            }
+            $type = 'category';
+        }
+    }
+}
+
+if ($visualizer_enable) {
+
+
+    $model_visualizer = Mage::getSingleton('maduranga_wall/visualizer')
+        ->getCollection()
+        ->addFieldToFilter('status', 1)
+        ->getItems();
+
+    foreach ($model_visualizer as $item) {
+        $data = $item->getData();
+
+        $backgrounds[] = $data['image'];
+    }
+
+    ?>
+
+    <button type="button" class="btn btn-success" data-toggle="modal" data-target="#visualizer">Show Wallpaper
+        Visualizer
+    </button>
+
+    <!-- Modal -->
+    <div id="visualizer" class="modal fade " role="dialog">
+        <div class="modal-dialog ">
+
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h3>Wallpaper Visualizer</h3>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class=" background_images col-sm-2">
+                            <div class="panel panel-success background">
+                                <div class="panel-heading">Select Background</div>
+                                <div class="panel-body">
+                                    <?php foreach ($backgrounds as $key => $background) {
+                                        $image = str_replace(Mage::getBaseDir('media'), '', $background);
+                                        $img = Mage::getBaseUrl('media') . $image; ?>
+                                        <img onclick="change_background_image(<?php echo $key; ?>);"
+                                             src="<?php echo $img; ?>"
+                                             width="100"
+                                             class="grid-image img-responsive"/>
+                                    <?php } ?>
+                                </div>
+                            </div>
+                            <div class="panel panel-success wallpaper">
+                                <div class="panel-heading">Select Wallpaper</div>
+                                <div class="panel-body">
+                                    <?php echo $wallpapers_html; ?>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-sm-10 visualizer">
+                            <div class="panel panel-success ">
+                                <div id="visualizer_body" class="panel-body visualizer_body">
+
+                                    <?php foreach ($backgrounds as $key => $background) {
+                                        $image = str_replace(Mage::getBaseDir('media'), '', $background);
+                                        $img = Mage::getBaseUrl('media') . $image; ?>
+                                        <img id="backgraund_<?php echo $key; ?>"
+                                             src="<?php echo $img; ?>"
+                                             class="grid-image img-responsive" style="display: none;"/>
+                                    <?php } ?>
+
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+<?php } ?>
+
+
+<!-- Move below code to header ****************************************************************-->
+
+
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"
+        type="application/javascript"></script>
+
+<link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"/>
+<style>
+
+    .modal-dialog {
+        width: 80%;
+    }
+
+    .background_images {
+        min-width: 110px;
+    }
+
+    .background_images .panel-body {
+        padding: 5px;
+    }
+
+    .background_images .panel-body img {
+        padding: 5px;
+    }
+
+    .visualizer_body {
+        max-height: 500px;
+        display: block;
+        padding: 0;
+    }
+
+    .visualizer_body img {
+        max-height: 500px;
+    }
+</style>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script type="text/javascript">
+    var jq = $.noConflict();
+
+    var wall_papers = '<?php echo json_encode($wallpapers, true); ?>';
+
+    function change_background_image(id) {
+        jq('#visualizer_body img').hide();
+        jq('#backgraund_' + id).show();
+    }
+
+    function change_wallpaper_image(id) {
+        var src = jq('#wallpaper_' + id).attr('src');
+        jq('#visualizer_body').css('background-image', 'url(' + src + ')');
+    }
+
+    change_background_image(0);
+    change_wallpaper_image(0);
+</script>

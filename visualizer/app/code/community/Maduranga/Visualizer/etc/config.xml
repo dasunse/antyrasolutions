@@ -1,0 +1,44 @@
+<?xml version="1.0" ?>
+<config>
+    <modules>
+        <Maduranga_Visualizer>
+            <version>1.0.0</version>
+        </Maduranga_Visualizer>
+    </modules>
+    <frontend>
+        <routers>
+            <visualizer>
+                <use>standard</use>
+                <args>
+                    <module>Maduranga_Visualizer</module>
+                    <frontName>visualizer</frontName>
+                </args>
+            </visualizer>
+        </routers>
+    </frontend>
+    <global>
+        <resources>
+            <maduranga_visualizer_setup>
+                <setup>
+                    <module>Maduranga_Visualizer</module>
+                    <class>Mage_Catalog_Model_Resource_Eav_Mysql4_Setup</class>
+                </setup>
+            </maduranga_visualizer_setup>
+        </resources>
+        <helpers>
+            <visualizer>
+                <class>Maduranga_Visualizer_Helper</class>
+            </visualizer>
+        </helpers>
+        <blocks>
+            <visualizer>
+                <class>Maduranga_Visualizer_Block</class>
+            </visualizer>
+        </blocks>
+        <models>
+            <visualizer>
+                <class>Maduranga_Visualizer_Model</class>
+            </visualizer>
+        </models>
+    </global>
+</config>

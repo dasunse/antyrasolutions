@@ -1,0 +1,9 @@
+
+DROP TABLE IF EXISTS `maduranga_wall_visualizer`;
+CREATE TABLE `maduranga_wall_visualizer` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` text NOT NULL,
+  `image` text NOT NULL,
+  `status` tinyint(4) NOT NULL,
+  PRIMARY KEY (`id`)
+)

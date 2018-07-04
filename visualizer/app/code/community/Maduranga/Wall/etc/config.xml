@@ -1,0 +1,81 @@
+<?xml version="1.0"?>
+<config>
+    <modules>
+        <Maduranga_Wall>
+            <version>1.0.0</version>
+        </Maduranga_Wall>
+    </modules>
+
+    <global>
+        <helpers>
+            <maduranga_wall>
+                <!-- This is where we define our helper directory -->
+                <class>Maduranga_Wall_Helper</class>
+            </maduranga_wall>
+        </helpers>
+
+        <blocks>
+            <maduranga_wall>
+                <!-- Set a block definition and lookup directory -->
+                <class>Maduranga_Wall_Block</class>
+            </maduranga_wall>
+        </blocks>
+
+        <models>
+            <maduranga_wall>
+                <!-- This is where we define our model directory -->
+                <class>Maduranga_Wall_Model</class>
+                <!-- Define a resource to create a custom table -->
+                <resourceModel>maduranga_wall_mysql4</resourceModel>
+            </maduranga_wall>
+
+            <!-- Here's our resource model we'll use to create a database table -->
+            <maduranga_wall_mysql4>
+                <class>Maduranga_Wall_Model_Mysql4</class>
+                <entities>
+                    <!-- Let's define our table, we'll call it with the visualizer name, but the real table is maduranga_wall_visualizer -->
+                    <!-- After we define our entity, we can call it with our model by calling maduranga_wall/visualizer -->
+                    <visualizer>
+                        <table>maduranga_wall_visualizer</table>
+                    </visualizer>
+                </entities>
+            </maduranga_wall_mysql4>
+        </models>
+
+        <!-- And finally we define our resource setup script -->
+        <resources>
+            <maduranga_wall_setup>
+                <setup>
+                    <module>Maduranga_Wall</module>
+                </setup>
+            </maduranga_wall_setup>
+        </resources>
+    </global>
+
+    <admin>
+        <routers>
+            <adminhtml>
+                <args>
+                    <!-- This is how we load our Adminhtml controllers -->
+                    <modules>
+                        <Maduranga_Wall before="Mage_Adminhtml">Maduranga_Wall_Adminhtml</Maduranga_Wall>
+                    </modules>
+                </args>
+            </adminhtml>
+        </routers>
+    </admin>
+
+    <adminhtml>
+        <layout>
+            <updates>
+                <maduranga_wall>
+                    <!--
+                    We again keep a nice naming convention and make our module upgrade proof by placing it in a separate folder
+                    - Since we are in the adminhtml node, this will look for the XML file in the app/design/adminhtml/default/default root folder
+                    -->
+                    <file>maduranga/wall.xml</file>
+                </maduranga_wall>
+            </updates>
+        </layout>
+    </adminhtml>
+</config>

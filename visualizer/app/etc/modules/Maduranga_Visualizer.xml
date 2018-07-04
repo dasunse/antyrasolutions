@@ -1,0 +1,9 @@
+<?xml version="1.0" ?>
+<config>
+    <modules>
+        <Maduranga_Visualizer>
+            <active>true</active>
+            <codePool>community</codePool>
+        </Maduranga_Visualizer>
+    </modules>
+</config>
