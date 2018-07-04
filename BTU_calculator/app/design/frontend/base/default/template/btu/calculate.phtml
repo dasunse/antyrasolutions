@@ -1,0 +1,147 @@
+<?php
+$get_current_category_id = Mage::registry('current_category')->getId();
+$btu_enable = Mage::getModel('catalog/category')->load($get_current_category_id)->getData('btu_enable');
+
+if($btu_enable){
+?>
+    <script type="text/x-template" id="modal-template">
+        <transition name="modal">
+            <div class="modal-mask">
+                <div class="modal-wrapper row">
+                    <div class="modal-container col-md-6 col-md-offset-3  ">
+
+                        <div class="modal-header">
+                            <i class="glyphicon glyphicon-remove-sign pull-right" @click="$emit('close')"></i>
+                            <h3>BTU Calculator</h3>
+                        </div>
+
+                        <div class="modal-body">
+                                <div class="row">
+                                    <form>
+                                        <div class="form-group col-md-4">
+                                            <label for="length">length:</label>
+                                            <input min="0" v-model.number="length_f" type="number" class="form-control">
+                                        </div>
+                                        <div class="form-group col-md-4">
+                                            <label for="width">width:</label>
+                                            <input min="0" v-model.number="width_f" type="number" class="form-control">
+                                        </div>
+                                        <div class="form-group col-md-4">
+                                            <label for="people">No. of people:</label>
+                                            <input min="0" v-model.number="people" type="number" class="form-control">
+                                        </div>
+
+                                        <div class="form-group col-md-4">
+                                            <label for="lights">No. of lights:</label>
+                                            <input min="0" v-model.number="lights" type="number" class="form-control">
+                                        </div>
+                                    </form>
+                                </div>
+                        </div>
+
+                        <div class="modal-footer">
+                            <div class="col-md-4 btn btn-default">total BTU : {{ length_f * width_f * 50 * 1.2 * people * 500 * lights * 52 }}</div>
+
+                            <button class="modal-default-button btn btn-success btn-xs" @click="$emit('close')">
+                                <i class=" 	glyphicon glyphicon-remove-sign"></i>
+                                    Closed
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </transition>
+    </script>
+
+    <div id="app">
+        <button class="btn btn-success" id="show-modal" @click="showModal = true">Show BTU Calculator</button>
+        <!-- use the modal component, pass in the prop -->
+        <modal v-if="showModal" @close="showModal = false">
+
+        </modal>
+    </div>
+<?php } ?>
+
+
+
+
+
+
+<!-- Move below code to header ****************************************************************-->
+
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" type="application/javascript"></script>
+<script src="https://unpkg.com/vue"></script>
+
+<script>
+    // register modal component
+    Vue.component('modal', {
+        template: '#modal-template',
+        data: function(){
+            return {
+                length_f: 0,
+                width_f: 0,
+                people: 0,
+                lights: 0
+            }
+        }
+    })
+
+    var cal = new Vue({
+        el: '#app',
+        data: {
+            showModal: false,
+        }
+    });
+
+</script>
+
+
+<link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"   />
+<style>
+    .modal-mask {
+        position: fixed;
+        z-index: 9998;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, .5);
+        display: table;
+        transition: opacity .3s ease;
+    }
+    .modal-wrapper {
+        display: table-cell;
+        vertical-align: middle;
+    }
+    .modal-container {
+        background-color: #fff;
+        border-radius: 2px;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, .33);
+        transition: all .3s ease;
+        font-family: Helvetica, Arial, sans-serif;
+    }
+
+    .modal-header h3 {
+        margin-top: 0;
+        color: #42b983;
+    }
+    .modal-body {
+    }
+
+    .modal-default-button {
+        float: right;
+    }
+    .modal-enter {
+        opacity: 0;
+    }
+
+    .modal-leave-active {
+        opacity: 0;
+    }
+
+    .modal-enter .modal-container,
+    .modal-leave-active .modal-container {
+        -webkit-transform: scale(1.1);
+        transform: scale(1.1);
+    }
+</style>

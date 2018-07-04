@@ -1,0 +1,44 @@
+<?xml version="1.0" ?>
+<config>
+    <modules>
+        <Maduranga_Btu>
+            <version>1.0</version>
+        </Maduranga_Btu>
+    </modules>
+    <frontend>
+        <routers>
+            <btu>
+                <use>standard</use>
+                <args>
+                    <module>Maduranga_Btu</module>
+                    <frontName>btu</frontName>
+                </args>
+            </btu>
+        </routers>
+    </frontend>
+    <global>
+        <resources>
+            <maduranga_btu_setup>
+                <setup>
+                    <module>Maduranga_Btu</module>
+                    <class>Mage_Catalog_Model_Resource_Eav_Mysql4_Setup</class>
+                </setup>
+            </maduranga_btu_setup>
+        </resources>
+        <helpers>
+            <btu>
+                <class>Maduranga_Btu_Helper</class>
+            </btu>
+        </helpers>
+        <blocks>
+            <btu>
+                <class>Maduranga_Btu_Block</class>
+            </btu>
+        </blocks>
+        <models>
+            <btu>
+                <class>Maduranga_Btu_Model</class>
+            </btu>
+        </models>
+    </global>
+</config>
