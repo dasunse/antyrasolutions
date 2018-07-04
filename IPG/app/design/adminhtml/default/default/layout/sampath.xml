@@ -1,0 +1,8 @@
+<?xml version="1.0"?>
+<layout>
+	<adminhtml_sampath_index>
+		<reference name="content">
+			<block type="sampath/adminhtml_sampath" name="sampath" />
+		</reference>
+	</adminhtml_sampath_index>
+</layout>

@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<config>
+    <modules>
+        <Maduranga_Sampath>
+            <active>true</active>
+            <codePool>community</codePool>
+        </Maduranga_Sampath>
+    </modules>
+</config>

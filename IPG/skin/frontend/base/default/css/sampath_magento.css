@@ -1,0 +1,24 @@
+@CHARSET "ISO-8859-1";
+
+#checkout-payment-method-load label[for=p_method_sampath]
+{
+    background-image: url("../images/sampath/sampath.png") !important;
+    background-repeat: no-repeat !important;
+    display: block;
+    padding-bottom: 15px;
+    padding-left: 150px;
+    padding-top: 15px;
+    background-color: transparent !important;
+    color: #908876;	
+}
+#co-payment-form #checkout-payment-method-load label[for=p_method_sampath]{
+	margin-left: 33px !important;
+}
+#p_method_sampath{
+	float: left;
+}
+#checkout-payment-method-load dt{
+	clear: both;
+    display: block;
+    float: left;
+}

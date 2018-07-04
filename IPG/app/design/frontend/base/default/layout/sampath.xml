@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<layout version="0.1.0">
+    <checkout_onepage_index>
+        <reference name="head">
+            <action method="addCss"><stylesheet>css/sampath_magento.css</stylesheet></action>
+        </reference>
+    </checkout_onepage_index>
+    <onestepcheckout_index_index>
+        <reference name="head">
+            <action method="addCss"><stylesheet>css/sampath_magento.css</stylesheet></action>
+        </reference>
+    </onestepcheckout_index_index>
+</layout>

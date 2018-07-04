@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<config>
+	<modules>
+		<Maduranga_Sampath>
+			<version>1.0.0</version>
+		</Maduranga_Sampath>
+	</modules>
+	<global>
+		<models>
+			<sampath>
+				<class>Maduranga_Sampath_Model</class>
+				<resourceModel>sampath_mysql4</resourceModel>
+			</sampath>
+			<sampath_mysql4>
+				<class>Maduranga_Sampath_Model_Mysql4</class>
+				<entities>
+					<sampath>
+						<table>maduranga_sampath_pyament</table>
+					</sampath>
+				</entities>
+			</sampath_mysql4>
+			
+		</models>
+		
+		<resources>
+			<sampath_setup>
+				<setup>
+					<module>Maduranga_Sampath</module>
+				</setup>
+				<connection>
+		            <use>core_setup</use>
+		        </connection>
+			</sampath_setup>
+			
+			<sampath_write>
+				<connection>
+					<use>core_write</use>
+				</connection>
+			</sampath_write>
+			<sampath_read>
+				<connection>
+					<use>core_read</use>
+				</connection>
+			</sampath_read>
+		</resources>
+		
+		<helpers>
+			<sampath>
+				<class>Maduranga_Sampath_Helper</class>
+			</sampath>
+		</helpers>
+		<blocks>
+			<sampath>
+				<class>Maduranga_Sampath_Block</class>
+			</sampath>
+		</blocks>
+	</global>
+	<default>
+		<payment>
+			<sampath>
+				<model>sampath/sampathmodel</model>
+				<active>0</active>
+				<order_status>pending</order_status>
+				<title>Sampath Payment Gateway</title>
+				<payment_action>sale</payment_action>
+				<allowspecific>0</allowspecific>
+				<sort_order>1</sort_order>
+			</sampath>
+		</payment>
+	</default>
+	<frontend>
+		<layout>
+            <updates>
+                <ops>
+                    <file>sampath.xml</file>
+                </ops>
+            </updates>
+        </layout>
+		<routers>
+			<sampath>
+				<use>standard</use>
+				<args>
+					<module>Maduranga_Sampath</module>
+					<frontName>sampath</frontName>
+				</args>
+			</sampath>
+		</routers>
+	</frontend>
+	
+	<adminhtml>
+		<layout>
+    		<updates>
+    			<sampath>
+    				<file>sampath.xml</file>
+    			</sampath>
+    		</updates>
+    	</layout>
+	</adminhtml>
+	
+	<admin>
+    	<routers>
+    		<adminhtml>
+    			<args>
+    				<modules>
+    					<sampath before="Mage_Adminhtml" >Maduranga_Sampath_Adminhtml</sampath>
+    				</modules>
+    			</args>
+    		</adminhtml>
+    	</routers>
+    </admin>
+    
+</config>
+
+

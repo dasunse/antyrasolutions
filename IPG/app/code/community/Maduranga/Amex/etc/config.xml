@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<config>
+	<modules>
+		<Maduranga_Amex>
+			<version>1.0.0</version>
+		</Maduranga_Amex>
+	</modules>
+	<global>
+		<models>
+			<amex>
+				<class>Maduranga_Amex_Model</class>
+				<resourceModel>amex_mysql4</resourceModel>
+			</amex>
+			<amex_mysql4>
+				<class>Maduranga_Amex_Model_Mysql4</class>
+				<entities>
+					<amex>
+						<table>maduranga_amex_pyament</table>
+					</amex>
+				</entities>
+			</amex_mysql4>
+			
+		</models>
+		
+		<resources>
+			<amex_setup>
+				<setup>
+					<module>Maduranga_Amex</module>
+				</setup>
+				<connection>
+		            <use>core_setup</use>
+		        </connection>
+			</amex_setup>
+			
+			<amex_write>
+				<connection>
+					<use>core_write</use>
+				</connection>
+			</amex_write>
+			<amex_read>
+				<connection>
+					<use>core_read</use>
+				</connection>
+			</amex_read>
+		</resources>
+		
+		<helpers>
+			<amex>
+				<class>Maduranga_Amex_Helper</class>
+			</amex>
+		</helpers>
+		<blocks>
+			<amex>
+				<class>Maduranga_Amex_Block</class>
+			</amex>
+		</blocks>
+	</global>
+	<default>
+		<payment>
+			<amex>
+				<model>amex/amexmodel</model>
+				<active>0</active>
+				<order_status>pending</order_status>
+				<title>Amex Payment Gateway</title>
+				<payment_action>sale</payment_action>
+				<allowspecific>0</allowspecific>
+				<sort_order>1</sort_order>
+			</amex>
+		</payment>
+	</default>
+	<frontend>
+		<layout>
+            <updates>
+                <ops>
+                    <file>amex.xml</file>
+                </ops>
+            </updates>
+        </layout>
+		<routers>
+			<amex>
+				<use>standard</use>
+				<args>
+					<module>Maduranga_Amex</module>
+					<frontName>amex</frontName>
+				</args>
+			</amex>
+		</routers>
+	</frontend>
+	
+	<adminhtml>
+		<layout>
+    		<updates>
+    			<amex>
+    				<file>amex.xml</file>
+    			</amex>
+    		</updates>
+    	</layout>
+	</adminhtml>
+	
+	<admin>
+    	<routers>
+    		<adminhtml>
+    			<args>
+    				<modules>
+    					<amex before="Mage_Adminhtml" >Maduranga_Amex_Adminhtml</amex>
+    				</modules>
+    			</args>
+    		</adminhtml>
+    	</routers>
+    </admin>
+    
+</config>
+
+
